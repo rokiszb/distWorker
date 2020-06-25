@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UrlRepository;
+use App\Repository\JobRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=UrlRepository::class)
+ * @ORM\Entity(repositoryClass=JobRepository::class)
  */
-class Url
+class Job
 {
     /**
      * @ORM\Id()
@@ -19,13 +20,16 @@ class Url
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url
      */
     private $url;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, options={"default":"NEW"})
      */
-    private $status;
+    private $status = 'NEW';
+
+    const ALLOWED_STATUS = ['NEW', 'PROCESSING', 'DONE', 'ERROR'];
 
     /**
      * @ORM\Column(type="integer", nullable=true)
