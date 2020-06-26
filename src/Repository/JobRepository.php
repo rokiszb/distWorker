@@ -41,8 +41,21 @@ class JobRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('j')
             ->andWhere('j.status = :val')
             ->setParameter('val', $value)
+            ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }
+
+    public function findManyByStatus($value): ?array
+    {
+        $qb = $this->createQueryBuilder('j')
+        ->andWhere('j.status = :val')
+        ->setParameter('val', $value)
+        ->setMaxResults(5); //temporarily 5
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
     }
 }
