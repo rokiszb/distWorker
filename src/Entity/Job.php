@@ -26,10 +26,11 @@ class Job
 
     /**
      * @ORM\Column(type="string", length=255, options={"default":"NEW"})
+     * @Assert\Choice({"NEW", "PROCESSING", "DONE", "ERROR"})
      */
     private $status = 'NEW';
 
-    const ALLOWED_STATUS = ['NEW', 'PROCESSING', 'DONE', 'ERROR'];
+    // const ALLOWED_STATUS = ['NEW', 'PROCESSING', 'DONE', 'ERROR'];
 
     /**
      * @ORM\Column(type="integer", nullable=true)
