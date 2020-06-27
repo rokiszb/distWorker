@@ -8,3 +8,4 @@
 
 1.4. php bin/console doctrine:fixtures:load
 
+## 2. To start server type 'symfony server:start' (if you have symfony cli installed), or 'php -S localhost:8000 -t public' to start php server

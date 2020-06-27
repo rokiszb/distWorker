@@ -19,10 +19,12 @@ class ProcessController extends AbstractController
     public function initiateRequestCodeFetchV1(JobRepository $jobRepository, ProcessHelper $processHelper, EntityManagerInterface $em)
     {
         $job = $jobRepository->findOneByStatus('NEW');
-        $processHelper->checkHttpResponseCode($job, $em);
+        $status = $processHelper->checkHttpResponseCode($job, $em);
         
         $response = new JsonResponse();
-        $response->setData(['status' => 'ok']);
+        $response->setData(['status' => $status]);
+
+        return $response;
     }
 
     /**
