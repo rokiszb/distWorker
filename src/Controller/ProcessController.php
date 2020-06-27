@@ -2,16 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Job;
 use App\Repository\JobRepository;
 use App\Service\ProcessHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use Amp\Parallel\Worker;
-use Amp\Promise;
-use Amp\Parallel\Worker\CallableTask;
-use Amp\Parallel\Worker\DefaultWorkerFactory;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class ProcessController extends AbstractController
 {
@@ -21,32 +18,18 @@ class ProcessController extends AbstractController
      */
     public function initiateRequestCodeFetchV1(JobRepository $jobRepository, ProcessHelper $processHelper, EntityManagerInterface $em)
     {
-        $jobs = $jobRepository->findManyByStatus('NEW');
-        $promises = [];
-        foreach ($jobs as $job) {
-            $processHelper->checkHttpResponseCode($job, $em);
-        }
-
-        return $this->render('process/index.html.twig', [
-            'process_count' => count($jobs),
-            // 'process_code' => $response['code'],
-        ]);
+        $job = $jobRepository->findOneByStatus('NEW');
+        $processHelper->checkHttpResponseCode($job, $em);
+        
+        $response = new JsonResponse();
+        $response->setData(['status' => 'ok']);
     }
 
     /**
-     * @Route("/processParallel", name="processParallel")
+     * @Route("/start_jobs", name="start_jobs")
      */
     public function initiateRequestCodeFetchV2(JobRepository $jobRepository, ProcessHelper $processHelper, EntityManagerInterface $em)
     {
-        $jobs = $jobRepository->findManyByStatus('NEW');
-        $promises = [];
-        foreach ($jobs as $job) {
-            $processHelper->checkHttpResponseCode($job, $em);
-        }
 
-        return $this->render('process/index.html.twig', [
-            'process_count' => count($jobs),
-            // 'process_code' => $response['code'],
-        ]);
     }
 }
