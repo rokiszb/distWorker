@@ -7,8 +7,9 @@ To speed up app creation process symfony make:bundle was utilized to create some
 
 ## Instalation
 
-Use command line to run required commands. Create database, run migrations and fixtures to seed database with some test data.
+Use command line to run required commands. First of all, run composer. Create database, run migrations and fixtures to seed database with some test data.
 ```sh
+$ composer install 
 $ php bin/console doctrine:database:create 
 $ php bin/console make:migration 
 $ php bin/console doctrine:migrations:migrate
