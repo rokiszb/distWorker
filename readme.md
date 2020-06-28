@@ -1,6 +1,7 @@
 # Distributed worker
 
 This app is a distributed worker that uses a database table. The worker requests each URL inside the table and stores the resulting response code.
+MAX_JOBS in ProcessContoller restritcs to how many jobs are run during one session. (currently 10).
 
 SQLite used as a database. Project runs on Symfony 5.1 version.
 To speed up app creation process symfony make:bundle was utilized to create some boilerplate entities, database fixtures, controllers and Job entity CRUD.
@@ -11,8 +12,7 @@ Use command line to run required commands. First of all, run composer. Create da
 ```sh
 $ composer install 
 $ php bin/console doctrine:database:create 
-$ php bin/console make:migration 
-$ php bin/console doctrine:migrations:migrate
+$ php bin/console doctrine:schema:create
 $ php bin/console doctrine:fixtures:load
 ```
 
