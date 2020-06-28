@@ -22,7 +22,7 @@ class ProcessHelper
         } catch (TransportException $transportException) {
             $status = ['code' => null, 'status' => 'ERROR'];
         } 
-        
+
         $job->setHttpCode($status['code'])->setStatus($status['status']);
         $em->flush();
 
